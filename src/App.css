@@ -138,7 +138,6 @@ body {
   right: calc(100% + 0.5rem);
   background-color: var(-gray);
 }
-
 .reply_textarea,
 .update_textarea,
 .post_textarea {
@@ -177,6 +176,10 @@ body {
   order: 9999999999;
 }
 
+.post > .post_image,
+.reply > .comment_avatar {
+  display: none;
+}
 .post_footer {
   display: flex;
   justify-content: space-between;
@@ -263,5 +266,23 @@ body {
   .container {
     width: 735px;
     margin: 0 auto;
+  }
+  .post,
+  .reply {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .post > .post_image,
+  .reply > .comment_avatar {
+    display: block;
+  }
+  .post_image,
+  .reply_footer .comment_avatar {
+    display: none;
+  }
+  .post_footer,
+  .reply_footer {
+    align-items: flex-start;
   }
 }

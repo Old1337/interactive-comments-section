@@ -8,7 +8,7 @@ const useUpdateInput = (intialValue) => {
     setTextValue(value);
   };
 
-  return [textValue, updateTextValue];
+  return [textValue, updateTextValue, setTextValue];
 };
 
 export default useUpdateInput;

@@ -1,12 +1,11 @@
 import React from "react";
 
 export default function CommentsFooter({
+  comment,
   upvote,
-  score,
   downvote,
-  showReply,
   handleDelete,
-  me,
+  showReply,
   showEdit,
 }) {
   return (
@@ -19,7 +18,7 @@ export default function CommentsFooter({
         >
           <img src="images/icon-plus.svg" alt="" />
         </button>
-        <span className="comment_score">{score}</span>
+        <span className="comment_score">{comment.score}</span>
         <button
           onClick={downvote}
           aria-label="click to decrease upvotes"
@@ -28,7 +27,7 @@ export default function CommentsFooter({
           <img src="images/icon-minus.svg" alt="" />
         </button>
       </div>
-      {!me && (
+      {!comment.me && (
         <button
           onClick={showReply}
           aria-label="click to reply"
@@ -39,7 +38,7 @@ export default function CommentsFooter({
         </button>
       )}
 
-      {me && (
+      {comment.me && (
         <div className="buttons_wrapper">
           <button
             onClick={handleDelete}

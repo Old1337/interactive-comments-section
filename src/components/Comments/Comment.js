@@ -31,17 +31,18 @@ export default function Comments({
   };
 
   const item = {
-    hidden: { scaleX: 0, x: "-200%" },
-    show: { scaleX: 1, x: 0 },
+    hidden: { scale: 0, opacity: 0 },
+    show: { scale: 1, opacity: 1 },
   };
   return (
-    <motion.div className="comment_container" variants={item}>
+    <motion.div
+      layout
+      style={{ order: -comment.score }}
+      className="comment_container"
+      variants={item}
+    >
       <div className="comment">
-        <CommentsHeader
-          avatar={comment.user.image}
-          username={comment.user.username}
-          duration={comment.createdAt}
-        />
+        <CommentsHeader comment={comment} />
 
         {!isEditing && <p className="comment_content">{comment.content}</p>}
 
@@ -67,12 +68,11 @@ export default function Comments({
 
         {!isEditing && (
           <CommentsFooter
+            comment={comment}
             upvote={() => upvote(comment.id, comment.type)}
             downvote={() => downvote(comment.id, comment.type)}
-            score={comment.score}
-            showReply={showReply}
-            me={comment.me}
             handleDelete={() => handleDelete(comment.id, comment.type)}
+            showReply={showReply}
             showEdit={showEdit}
           />
         )}
@@ -93,9 +93,9 @@ export default function Comments({
             <Replies
               key={reply.id}
               reply={reply}
+              addReply={addReply}
               upvote={upvote}
               downvote={downvote}
-              addReply={addReply}
               handleDelete={handleDelete}
               updateComment={updateComment}
             />

@@ -8,7 +8,7 @@ import useReplyEl from "../Hooks/useReplyEl";
 import useUpdateInput from "../Hooks/useUpdateInput";
 import useEdit from "../Hooks/useEdit";
 
-import { AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Replies({
   reply,
@@ -23,14 +23,13 @@ export default function Replies({
   const [isEditing, showEdit, handleUpdateComment] = useEdit(updateComment);
 
   return (
-    <div className="reply_container">
+    <motion.div
+      layout
+      style={{ order: -reply.score }}
+      className="reply_container"
+    >
       <div className="comment_reply">
-        <CommentsHeader
-          avatar={reply.user.image}
-          username={reply.user.username}
-          duration={reply.createdAt}
-          me={reply.me}
-        />
+        <CommentsHeader comment={reply} />
 
         {!isEditing && (
           <p className="comment_content">
@@ -59,12 +58,11 @@ export default function Replies({
 
         {!isEditing && (
           <CommentsFooter
-            score={reply.score}
+            comment={reply}
             upvote={() => upvote(reply.id, reply.type)}
             downvote={() => downvote(reply.id, reply.type)}
-            showReply={showReply}
-            me={reply.me}
             handleDelete={() => handleDelete(reply.id, reply.type)}
+            showReply={showReply}
             showEdit={showEdit}
           />
         )}
@@ -72,13 +70,13 @@ export default function Replies({
       <AnimatePresence>
         {replyEl && (
           <Reply
-            addReply={handleReply}
             id={reply.ownerId}
             type={reply.type}
             replyTo={reply.user.username}
+            addReply={handleReply}
           />
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }

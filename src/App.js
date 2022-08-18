@@ -25,43 +25,39 @@ function App() {
 
   const increaseUpvote = (id, type) => {
     if (type === "comment") {
-      setComments((prevComments) =>
-        prevComments.map((comment) =>
-          comment.id === id ? { ...comment, score: comment.score + 1 } : comment
-        )
+      const updatedComment = comments.map((comment) =>
+        comment.id === id ? { ...comment, score: comment.score + 1 } : comment
       );
+
+      setComments(updatedComment);
     } else {
-      setComments((prevComments) =>
-        prevComments.map((comment) => {
-          return {
-            ...comment,
-            replies: comment.replies.map((reply) =>
-              reply.id === id ? { ...reply, score: reply.score + 1 } : reply
-            ),
-          };
-        })
-      );
+      const updatedReply = comments.map((comment) => ({
+        ...comment,
+        replies: comment.replies.map((reply) =>
+          reply.id === id ? { ...reply, score: reply.score + 1 } : reply
+        ),
+      }));
+
+      setComments(updatedReply);
     }
   };
 
   const decreaseUpvote = (id, type) => {
     if (type === "comment") {
-      setComments((prevComments) =>
-        prevComments.map((comment) =>
-          comment.id === id ? { ...comment, score: comment.score - 1 } : comment
-        )
+      const updatedComment = comments.map((comment) =>
+        comment.id === id ? { ...comment, score: comment.score - 1 } : comment
       );
+
+      setComments(updatedComment);
     } else {
-      setComments((prevComments) =>
-        prevComments.map((comment) => {
-          return {
-            ...comment,
-            replies: comment.replies.map((reply) =>
-              reply.id === id ? { ...reply, score: reply.score - 1 } : reply
-            ),
-          };
-        })
-      );
+      const updatedReply = comments.map((comment) => ({
+        ...comment,
+        replies: comment.replies.map((reply) =>
+          reply.id === id ? { ...reply, score: reply.score - 1 } : reply
+        ),
+      }));
+
+      setComments(updatedReply);
     }
   };
 
@@ -81,33 +77,35 @@ function App() {
       },
     };
 
-    setComments((prevComments) =>
-      prevComments.map((comment) => {
-        if (comment.id === id) {
-          return { ...comment, replies: [...comment.replies, newReply] };
-        } else {
-          return comment;
-        }
-      })
-    );
+    const updatedReplies = comments.map((comment) => {
+      if (comment.id === id)
+        return { ...comment, replies: [...comment.replies, newReply] };
+
+      return comment;
+    });
+
+    setComments(updatedReplies);
   };
 
-  const postComment = useCallback((textValue) => {
-    const newComment = {
-      id: nanoid(),
-      content: textValue,
-      createdAt: new Date().getTime(),
-      type: "comment",
-      score: 0,
-      me: true,
-      user: {
-        image: "avatars/image-juliusomo.png",
-        username: "juliusomo",
-      },
-      replies: [],
-    };
-    setComments((prevComments) => [...prevComments, newComment]);
-  }, []);
+  const postComment = useCallback(
+    (textValue) => {
+      const newComment = {
+        id: nanoid(),
+        content: textValue,
+        createdAt: new Date().getTime(),
+        type: "comment",
+        score: 0,
+        me: true,
+        user: {
+          image: "avatars/image-juliusomo.png",
+          username: "juliusomo",
+        },
+        replies: [],
+      };
+      setComments([...comments, newComment]);
+    },
+    [comments]
+  );
 
   const showModal = () => {
     SetisModalVisible(true);
@@ -121,37 +119,39 @@ function App() {
     SetisModalVisible(false);
 
     if (clickedComment.type === "comment") {
-      setComments((prevComments) =>
-        prevComments.filter((comment) => comment.id !== clickedComment.id)
+      const updatedComment = comments.filter(
+        (comment) => comment.id !== clickedComment.id
       );
+
+      setComments(updatedComment);
     } else {
-      setComments((prevComments) =>
-        prevComments.map((comment) => ({
-          ...comment,
-          replies: comment.replies.filter(
-            (reply) => reply.id !== clickedComment.id
-          ),
-        }))
-      );
+      const updatedReply = comments.map((comment) => ({
+        ...comment,
+        replies: comment.replies.filter(
+          (reply) => reply.id !== clickedComment.id
+        ),
+      }));
+
+      setComments(updatedReply);
     }
   };
 
   const updateComment = (id, type, text) => {
     if (type === "comment") {
-      setComments((prevComments) =>
-        prevComments.map((comment) =>
-          comment.id === id ? { ...comment, content: text } : comment
-        )
+      const updatedComment = comments.map((comment) =>
+        comment.id === id ? { ...comment, content: text } : comment
       );
+
+      setComments(updatedComment);
     } else {
-      setComments((prevComments) =>
-        prevComments.map((comment) => ({
-          ...comment,
-          replies: comment.replies.map((reply) =>
-            reply.id === id ? { ...reply, content: text } : reply
-          ),
-        }))
-      );
+      const updatedReply = comments.map((comment) => ({
+        ...comment,
+        replies: comment.replies.map((reply) =>
+          reply.id === id ? { ...reply, content: text } : reply
+        ),
+      }));
+
+      setComments(updatedReply);
     }
   };
 

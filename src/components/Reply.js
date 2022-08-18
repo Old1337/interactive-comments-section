@@ -14,11 +14,17 @@ export default function Reply({ replyTo, addReply, id }) {
       exit={{ scale: 0, opacity: 0 }}
       className="reply"
     >
+      <img
+        className="comment_avatar"
+        src="avatars/image-juliusomo.png"
+        alt=""
+      ></img>
       <textarea
         className="reply_textarea"
         onChange={updateTextValue}
         value={textValue}
       ></textarea>
+
       <div className="reply_footer">
         <img
           className="comment_avatar"
