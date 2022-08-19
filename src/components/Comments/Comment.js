@@ -31,8 +31,8 @@ export default function Comments({
   };
 
   const item = {
-    hidden: { scale: 0, opacity: 0 },
-    show: { scale: 1, opacity: 1 },
+    hidden: { scale: 0, opacity: 0, y: -1000 },
+    show: { scale: 1, opacity: 1, y: 0 },
   };
   return (
     <motion.div
@@ -44,37 +44,39 @@ export default function Comments({
       <div className="comment">
         <CommentsHeader comment={comment} />
 
-        {!isEditing && <p className="comment_content">{comment.content}</p>}
-
-        {isEditing && (
-          <textarea
-            aria-label="edit your comment here"
-            className="update_textarea"
-            value={textValue}
-            onChange={updateTextValue}
-          />
-        )}
-
-        {isEditing && (
-          <button
-            onClick={() =>
-              handleUpdateComment(comment.id, comment.type, textValue)
-            }
-            className="update_btn"
-          >
-            UPDATE
-          </button>
-        )}
-
         {!isEditing && (
-          <CommentsFooter
-            comment={comment}
-            upvote={() => upvote(comment.id, comment.type)}
-            downvote={() => downvote(comment.id, comment.type)}
-            handleDelete={() => handleDelete(comment.id, comment.type)}
-            showReply={showReply}
-            showEdit={showEdit}
-          />
+          <>
+            <p className="comment_content">{comment.content}</p>
+
+            <CommentsFooter
+              comment={comment}
+              upvote={() => upvote(comment.id, comment.type)}
+              downvote={() => downvote(comment.id, comment.type)}
+              handleDelete={() => handleDelete(comment.id, comment.type)}
+              showReply={showReply}
+              showEdit={showEdit}
+            />
+          </>
+        )}
+
+        {isEditing && (
+          <>
+            <textarea
+              aria-label="edit your comment here"
+              className="update_textarea"
+              value={textValue}
+              onChange={updateTextValue}
+            />
+
+            <button
+              onClick={() =>
+                handleUpdateComment(comment.id, comment.type, textValue)
+              }
+              className="update_btn"
+            >
+              UPDATE
+            </button>
+          </>
         )}
       </div>
       <AnimatePresence>

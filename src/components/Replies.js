@@ -30,41 +30,41 @@ export default function Replies({
     >
       <div className="comment_reply">
         <CommentsHeader comment={reply} />
-
         {!isEditing && (
-          <p className="comment_content">
-            <span className="comment_mention">@{reply.replyingTo}</span>
-            {reply.content}
-          </p>
-        )}
+          <>
+            <p className="comment_content">
+              <span className="comment_mention">@{reply.replyingTo}</span>
+              {reply.content}
+            </p>
 
+            <CommentsFooter
+              comment={reply}
+              upvote={() => upvote(reply.id, reply.type)}
+              downvote={() => downvote(reply.id, reply.type)}
+              handleDelete={() => handleDelete(reply.id, reply.type)}
+              showReply={showReply}
+              showEdit={showEdit}
+            />
+          </>
+        )}
         {isEditing && (
-          <textarea
-            aria-label="edit your comment here"
-            className="update_textarea"
-            value={textValue}
-            onChange={updateTextValue}
-          />
-        )}
+          <>
+            <textarea
+              aria-label="edit your comment here"
+              className="update_textarea"
+              value={textValue}
+              onChange={updateTextValue}
+            />
 
-        {isEditing && (
-          <button
-            onClick={() => handleUpdateComment(reply.id, reply.type, textValue)}
-            className="update_btn"
-          >
-            UPDATE
-          </button>
-        )}
-
-        {!isEditing && (
-          <CommentsFooter
-            comment={reply}
-            upvote={() => upvote(reply.id, reply.type)}
-            downvote={() => downvote(reply.id, reply.type)}
-            handleDelete={() => handleDelete(reply.id, reply.type)}
-            showReply={showReply}
-            showEdit={showEdit}
-          />
+            <button
+              onClick={() =>
+                handleUpdateComment(reply.id, reply.type, textValue)
+              }
+              className="update_btn"
+            >
+              UPDATE
+            </button>
+          </>
         )}
       </div>
       <AnimatePresence>

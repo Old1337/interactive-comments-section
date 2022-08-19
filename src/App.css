@@ -20,7 +20,7 @@ body {
 }
 
 .main {
-  margin-top: 5rem;
+  margin-top: 2rem;
 }
 
 .container {
@@ -127,7 +127,9 @@ body {
   display: grid;
   gap: 1rem;
   position: relative;
-  margin-left: 2rem;
+  margin-left: 1rem;
+  border-left: 2px solid #eaecf1;
+  padding-left: 1rem;
 }
 
 .comment_replies::before {
@@ -194,7 +196,7 @@ body {
 .update_btn {
   background-color: var(--Modeate-blue);
   color: white;
-  padding: 0.8rem 1.5rem;
+  padding: 0.8rem 1.8rem;
   font-weight: 300;
   border-radius: 0.5rem;
 }
@@ -284,5 +286,10 @@ body {
   .post_footer,
   .reply_footer {
     align-items: flex-start;
+  }
+  .comment_replies {
+    margin-left: 2rem;
+    border-left: 2px solid #eaecf1;
+    padding-left: 2rem;
   }
 }
