@@ -1,3 +1,3 @@
-# interactive comment section
+# interactive comments section
 
 ![preview](preview.png)
